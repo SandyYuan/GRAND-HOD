@@ -42,6 +42,45 @@ The main interface of the code is the function `gen_gal_cat()`, which takes the 
 - `whatseed` : integer (optional). The seed to the random number generator. Default value is 0.
 - `rsd` : boolean (optional). The redshift space distortion flag. Shifts the LOS locations of galaxies. Default is True. 
   
+An example code to read these data files is
+```
+import gen_gal_catlog_rockstar as galcat
+
+# constants
+params = {}
+params['z'] = 0.5
+params['h'] = 0.6726
+params['Nslab'] = 3
+params['Lbox'] = 1100/params['h'] # Mpc, box size
+params['Mpart'] = 3.88537e+10/params['h'] # Msun, mass of each particle
+params['velz2kms'] = 9.690310687246482e+04/params['Lbox'] # H(z)/(1+Z), km/s/Mpc
+params['maxdist'] = 30 # Mpc
+params['num_sims'] = 16
+
+# rsd?
+rsd = True
+params['rsd'] = rsd
+
+# HOD, Zheng+2009, Kwan+2015
+M_cut = 10**13.35 # these constants are taken at the middle of the design, Kwan+15
+log_Mcut = np.log10(M_cut)
+M1 = 10**13.8
+log_M1 = np.log10(M1)
+sigma = 0.85
+alpha = 1
+kappa = 1
+
+# HOD prescription 
+design = {'M_cut': M_cut, 'M1': M1, 'sigma': sigma, 'alpha': alpha, 'kappa': kappa}
+decorations = {'s': 0, 's_v': 0, 'alpha_c': 0, 's_p': 0, 'A': 0}
+
+# which simulation box are we using?
+whichsim = 0
+
+# generate galaxy catalogs
+galcat.gen_gal_cat(whichsim, design, decorations, params, rsd = rsd)
+
+```
 
 ### Output:
 The script outputs two files, a central galaxy catalog and a satellite galaxy catalog, in binary format. 
@@ -49,22 +88,22 @@ The outputs are stored in a folder `./data_rsd` if the `rsd` flag is True and `.
 
 The central and satellite galaxy catalog files are named `halos_gal_cent_<whichsim>` and `halos_gal_sats_<whichsim>`, respectively. Each file contains the 3D position, halo ID and halo mass of the galaxies. 
 
-An Example code to read these data files is
+An example code to read these data files is
 ```
-        # read in the galaxy catalog
-	fcent = np.fromfile(savedir+"/halos_gal_cent_"+str(whichsim))
-	fsats = np.fromfile(savedir+"/halos_gal_sats_"+str(whichsim))
-	# reshape the file data
-	fcent = np.array(np.reshape(fcent, (-1, 5)))
-	fsats = np.array(np.reshape(fsats, (-1, 5)))
+# read in the galaxy catalog
+fcent = np.fromfile(savedir+"/halos_gal_cent_"+str(whichsim))
+fsats = np.fromfile(savedir+"/halos_gal_sats_"+str(whichsim))
+# reshape the file data
+fcent = np.array(np.reshape(fcent, (-1, 5)))
+fsats = np.array(np.reshape(fsats, (-1, 5)))
 
-	pos_cent = fcent[:,0:3]
-	halo_indx_cent = fcent[:,3]
-	halo_mass_cent = fcent[:,4]
+pos_cent = fcent[:,0:3]
+halo_indx_cent = fcent[:,3]
+halo_mass_cent = fcent[:,4]
 
-	pos_sats = fsats[:,0:3]
-	halo_indx_sats = fsats[:,3]
-	halo_mass_sats = fsats[:,4]
+pos_sats = fsats[:,0:3]
+halo_indx_sats = fsats[:,3]
+halo_mass_sats = fsats[:,4]
 ```
 where `savedir` is the directory where the data files live in, and `whichsim` is the index of the simulation box. 
 
