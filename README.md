@@ -24,8 +24,14 @@ The main interface of the code is the function `gen_gal_cat()`, which takes the 
   - `alpha` : The power law index of the number of satellite galaxies. 
   - `kappa` : Parameter that affects the cut-off mass for satellite galaxies. 
   A detailed discussion and best-fit values of these parameters can be found in Zheng+2009.
-- 'decorations' : dictionary. The HOD generalization parameters. The dictionary may contain the following five parameters:
- - 
+- `decorations` : dictionary. The HOD generalization parameters. The dictionary may contain the following five parameters:
+  - `s` : float. The satellite profile modulation parameter. Modulates how the radial distribution of satellite galaxies within halos deviate from the radial profile of the halo. Positive value favors satellite galaxies to populate the outskirts of the halo whereas negative value favors satellite galaxy to live near the center of the halo. 
+  - `s_v` : float. The satellite velocity bias parameter. Modulates how the satellite galaxy peculiar velocity deviates from that of the local dark matter particle. Positive value favors high peculiar velocity satellite galaxies and vice versa. Note that our implementation preserves the Newton's second law of the satellite galaxies.
+  - `alpha_c` : float. The central velocity bias parameter. Modulates the peculiar velocity of the central galaxy. The larger the absolute value of the parameter, the larger the peculiar velocity of the central. The sign of the value does not matter. 
+  - `s_p` : float. The perihelion distance modulation parameter. A positive value favors satellite galaxies to have larger distances to the halo center upon their closest approach to the center and vice versa. This can be regarded as a "fancier" satellite profile modulation parameter. 
+  - `A` : float. The assembly bias parameter. Introduces the effect of assembly bias. A positive value favors higher concentration halos to host galaxies whereas a negative value favors lower concentration halos to host galaxies. 
+  A detailed discussion of these parameters can be found in Yuan et al. in prep. 
+ 
 
 ### Output:
 
