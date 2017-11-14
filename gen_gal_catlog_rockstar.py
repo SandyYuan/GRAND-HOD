@@ -9,12 +9,12 @@ Requires the following inputs:
 """
 
 import numpy as np
-import os,sys
+import os
+import sys
 import random
 import time
 from astropy.table import Table
 import astropy.io.fits as pf
-from astropy.cosmology import WMAP9 as cosmo
 from scipy.special import erfc
 import h5py
 from glob import glob
@@ -183,8 +183,8 @@ def gen_cent(halo_ids, halo_pos, halo_vels, halo_vrms, halo_mass,
             np.random.normal(loc = 0, scale = 1) 
         # if there is velocity, generate pecular velocity for the central
         else:
-            v_pec = \
-            np.random.normal(loc = 0, scale = decorations['alpha_c']*vrms_los)
+            v_pec = np.random.normal(loc = 0, 
+                            scale = abs(decorations['alpha_c'])*vrms_los)
             cent_vel[2] = cent_vel[2] + v_pec 
 
         # if we do have a central, then store to file
@@ -547,7 +547,8 @@ def gen_gals(directory, design, decorations, fcent, fsats, rsd, params):
 
         # for each halo, generate satellites and output to file
         gen_sats(halo_ids, halo_pos, halo_vels, newpart, halo_mass, 
-                 halo_pstart, halo_pnum, design, decorations, fsats, rsd, params)
+                 halo_pstart, halo_pnum, design, decorations, fsats, 
+                 rsd, params)
 
 
 def gen_gal_cat(whichsim, design, decorations, params, 
