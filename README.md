@@ -18,12 +18,12 @@ To install, simply download the script to the directory you want the mock catalo
 The main interface of the code is the function `gen_gal_cat()`, which takes the following inputs:
 - `whichsim` : integer. The index of the simulation box. For the Abacus 1100/h Mpc simulation with Planck cosmology, this number ranges from 0 to 15.  
 - `design` : dictionary. The baseline HOD parameters. The dictionary requires the following five parameters:
- - `M_cut` : The cut-off mass for the halo to host in a central galaxy. Given in solar mass.
- - 'M1' : The scale mass for the number of satellite galaxies. Given in solar mass.
- - 'sigma' : Parameter that modulates the shape of the number of central galaxy.
- - 'alpha' : The power law index of the number of satellite galaxies. 
- - 'kappa' : Parameter that affects the cut-off mass for satellite galaxies. 
- A detailed discussion and best-fit values of these parameters can be found in Zheng+2009.
+  - `M_cut` : The cut-off mass for the halo to host in a central galaxy. Given in solar mass.
+  - `M1` : The scale mass for the number of satellite galaxies. Given in solar mass.
+  - `sigma` : Parameter that modulates the shape of the number of central galaxy.
+  - `alpha` : The power law index of the number of satellite galaxies. 
+  - `kappa` : Parameter that affects the cut-off mass for satellite galaxies. 
+  A detailed discussion and best-fit values of these parameters can be found in Zheng+2009.
 - 'decorations' : dictionary. The HOD generalization parameters. The dictionary may contain the following five parameters:
  - 
 
