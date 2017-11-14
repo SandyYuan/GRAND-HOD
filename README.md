@@ -31,7 +31,17 @@ The main interface of the code is the function `gen_gal_cat()`, which takes the 
   - `s_p` : float. The perihelion distance modulation parameter. A positive value favors satellite galaxies to have larger distances to the halo center upon their closest approach to the center and vice versa. This can be regarded as a "fancier" satellite profile modulation parameter. 
   - `A` : float. The assembly bias parameter. Introduces the effect of assembly bias. A positive value favors higher concentration halos to host galaxies whereas a negative value favors lower concentration halos to host galaxies. 
   A detailed discussion of these parameters can be found in Yuan et al. in prep. 
- 
+- `params` : dictionary. Simulation parameters. Following are the required parameters:
+  - `z` : float. Redshift of the simulation snapshot. With the current directory, `z = 0.5`.
+  - `h` : float. Hubble constant. For Planck cosmology, we use `h = 0.6726`.
+  - `Nslab` : float. The number of halo data files each simulation box produces. For current Abacus 1100 boxes, `Nslab = 3`.
+  - `Lbox` : float. The size of the simulation box in Mpc. For current Abacus 1100 boxes, `Lbox = 1100/h`.
+  - `Mpart` : float. The particle mass in solar mass. For current Abacus 1100 boxes, `Mpart = 3.88e10/h`.
+  - `velz2kms` : float. The conversion from simulation velocity to velocity in km/s and vice versa. The value can be calculated by H(z)/(1+z). 
+  - `num_sims` : integer. The number of simulation boxes. For current Abacus 1100 boxes, `num_sims = 16`.
+- `whatseed` : integer (optional). The seed to the random number generator. Default value is 0.
+- `rsd` : boolean (optional). The redshift space distortion flag. Shifts the LOS locations of galaxies. Default is True. 
+  
 
 ### Output:
 
