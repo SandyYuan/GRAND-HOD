@@ -77,7 +77,8 @@ decorations = {'s': 0, 's_v': 0, 'alpha_c': 0, 's_p': 0, 'A': 0}
 # which simulation box are we using?
 whichsim = 0
 
-# compute the median halo concentration fit, you dont need to run this if you dont plan on invoking assembly bias decoration. 
+# compute the median halo concentration fit, you dont need to run this if you dont 
+# plan on invoking assembly bias decoration. 
 import gen_medianc
 
 # generate galaxy catalogs
