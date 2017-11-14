@@ -12,7 +12,7 @@ The code is currently written specifically for the Abacus simulations, but the m
 
 The code does not currently have dependencies other than basic Python packages. 
 
-To install, simply download the script to the directory you want the mock catalogs to live in. If you are not on the Eisenstein Group computer clusters at CfA, you may need to change the `directory` variable to point to the location of the simulation data. Keep the simulation box tag `str(whichsim)` as an unknown variable. 
+To install, simply download the .py files to the directory you want the mock catalogs to live in. If you are not on the Eisenstein Group computer clusters at CfA, you may need to change the `directory` variable to point to the location of the simulation data. Keep the simulation box tag `str(whichsim)` as an unknown variable. 
 
 ### Input:
 The main interface of the code is the function `gen_gal_cat()`, which takes the following inputs:
@@ -29,7 +29,7 @@ The main interface of the code is the function `gen_gal_cat()`, which takes the 
   - `s_v` : float. The satellite velocity bias parameter. Modulates how the satellite galaxy peculiar velocity deviates from that of the local dark matter particle. Positive value favors high peculiar velocity satellite galaxies and vice versa. Note that our implementation preserves the Newton's second law of the satellite galaxies.
   - `alpha_c` : float. The central velocity bias parameter. Modulates the peculiar velocity of the central galaxy. The larger the absolute value of the parameter, the larger the peculiar velocity of the central. The sign of the value does not matter. 
   - `s_p` : float. The perihelion distance modulation parameter. A positive value favors satellite galaxies to have larger distances to the halo center upon their closest approach to the center and vice versa. This can be regarded as a "fancier" satellite profile modulation parameter. 
-  - `A` : float. The assembly bias parameter. Introduces the effect of assembly bias. A positive value favors higher concentration halos to host galaxies whereas a negative value favors lower concentration halos to host galaxies. 
+  - `A` : float. The assembly bias parameter. Introduces the effect of assembly bias. A positive value favors higher concentration halos to host galaxies whereas a negative value favors lower concentration halos to host galaxies. If you are invoking assembly bias decoration, i.e. a non-zero `A` parameter, you need to run gen_medianc.py first. 
   A detailed discussion of these parameters can be found in Yuan et al. in prep. To turn off any of the five decorations, just set the corresponding parameter to 0.
 - `params` : dictionary. Simulation parameters. Following are the required parameters:
   - `z` : float. Redshift of the simulation snapshot. With the current directory, `z = 0.5`.
@@ -76,6 +76,9 @@ decorations = {'s': 0, 's_v': 0, 'alpha_c': 0, 's_p': 0, 'A': 0}
 
 # which simulation box are we using?
 whichsim = 0
+
+# compute the median halo concentration fit, you dont need to run this if you dont plan on invoking assembly bias decoration. 
+import gen_medianc
 
 # generate galaxy catalogs
 galcat.gen_gal_cat(whichsim, design, decorations, params, rsd = rsd)
