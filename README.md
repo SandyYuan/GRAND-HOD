@@ -51,7 +51,7 @@ The central and satellite galaxy catalog files are named `halos_gal_cent_<whichs
 
 An Example code to read these data files is
 ```
-# read in the galaxy catalog
+        # read in the galaxy catalog
 	fcent = np.fromfile(savedir+"/halos_gal_cent_"+str(whichsim))
 	fsats = np.fromfile(savedir+"/halos_gal_sats_"+str(whichsim))
 	# reshape the file data
