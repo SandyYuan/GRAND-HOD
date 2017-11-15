@@ -1,10 +1,17 @@
 #!/usr/bin/env python
 """
 A module to compute a polynomial fit for the median halo concentration as 
-a function of halo mass. 
+a function of halo mass. If you want to invoke assembly bias decoration, 
+you need to run this script first. It takes ~10 mins. 
 
-Simply run 'python gen_medianc.py' to execute this script. The script will
-output cparam_fits.npz file to your data directory that contains the best fit.
+To run this script, you can do 
+
+from gen_medianc import avg_c
+
+avg_c(params, True)
+
+The script will output cparam_fits.npz file to your data directory that 
+contains the best fit.
 
 """
 
@@ -143,20 +150,16 @@ def avg_c(params, rsd = True):
     datadir = "./data"
     if rsd:
         datadir  = datadir + "_rsd"
+
+    # if this directory does not exist, make it
+    if not os.path.exists(datadir):
+        os.makedirs(datadir)
+    
     fitfile = datadir+"/cparam_fits"
     np.savez(fitfile, cfit = p_c)
 
-# constants
-params = {}
-params['z'] = 0.5
-params['h'] = 0.6726
-params['Nslab'] = 3
-params['Lbox'] = 1100/params['h'] # Mpc, box size
-params['Mpart'] = 3.88537e+10/params['h'] # Msun, mass of each particle
-params['velz2kms'] = 9.690310687246482e+04/params['Lbox'] # H(z)/(1+Z), km/s/Mpc
-params['maxdist'] = 30 # Mpc
-params['num_sims'] = 16
-
+"""
 rsd = True 
 
 avg_c(params, rsd)
+"""

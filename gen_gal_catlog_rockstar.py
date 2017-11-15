@@ -3,9 +3,6 @@
 """
 Module implementation of a generalized and differentiable Halo Occupation 
 Distribution (HOD)for N-body cosmological simulations. 
-Requires the following inputs:
-...
-
 """
 
 import numpy as np
@@ -494,7 +491,20 @@ def gen_gals(directory, design, decorations, fcent, fsats, rsd, params):
 
         # if assembly bias parameter is not zero, then we do halo reranking
         if not A == 0:
-            # calculate c median and std.
+            # calculate halo concentration median
+            datadir = "./data"
+            if rsd:
+                datadir = datadir+"_rsd"
+            pcfilename = datadir+"/cparam_fits.npz"
+            # if the file exists, just load it
+            if os.path.isfile(pcfilename):
+                cfits = np.load(pcfilename)
+                pcmed = cfits['cfit']
+            # if the file does not exist, generate it
+            else: 
+                sys.exit("Error: to invoke assembly bias, \
+                            you need to run gen_medianc.py first!")
+
             halo_cmed = np.polyval(pcmed, np.log10(halo_mass))
             # then we can calculate the quantity halo_deltac
             halo_deltac = halo_c - halo_cmed
