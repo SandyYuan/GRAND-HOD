@@ -114,6 +114,7 @@ where `savedir` is the directory where the data files live in, and `whichsim` is
 
 
 ## Citation:
+If you use this code, please cite [Yuan, Eisenstein & Garrison (2017)](http://adsabs.harvard.edu/doi/10.1093/mnras/stx2032).
 
 ## Help 
 If you need help with the code, please contact me (Sandy) at sihan.yuan@cfa.harvard.edu. 
