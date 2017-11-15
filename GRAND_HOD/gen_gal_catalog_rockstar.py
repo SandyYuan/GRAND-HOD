@@ -3,6 +3,9 @@
 """
 Module implementation of a generalized and differentiable Halo Occupation 
 Distribution (HOD)for N-body cosmological simulations. 
+
+Add to .bashrc:
+export PYTHONPATH="/path/to/GRAND-HOD:$PYTHONPATH"
 """
 
 import numpy as np
@@ -17,7 +20,7 @@ import h5py
 from glob import glob
 
 
-def n_cen(M_in, design): 
+def n_cen(M_in, design, m_cutoff=4e12): 
     """
     Computes the expected number of central galaxies given a halo mass and 
     the HOD design. 
@@ -30,6 +33,9 @@ def n_cen(M_in, design):
 
     design : dict
         Dictionary containing the five HOD parameters. 
+        
+    m_cutoff: float
+        Ignore halos small than this mass
 
     Returns
     -------
@@ -44,8 +50,13 @@ def n_cen(M_in, design):
                                                       'sigma', 
                                                       'alpha', 
                                                       'kappa'))
+    #M_cut, M1, sigma, alpha, kappa = [design[k] for k in ('M_cut', 
+    #                                                      'M1', 
+    #                                                      'sigma', 
+    #                                                      'alpha', 
+    #                                                      'kappa' ) ]
 
-    if M_in < 4e12: # this cutoff ignores halos with less than 100 particles
+    if M_in < m_cutoff: # this cutoff ignores halos with less than 100 particles
         return 0
     return .5*erfc(np.log(M_cut/M_in)/(2**.5*sigma))
 
@@ -275,7 +286,7 @@ def gen_sats(halo_ids, halo_pos, halo_vels, newpart, halo_mass,
     part_vel = subsample['vel']
 
     # loop through the halos to populate satellites
-    for i in range(0, len(halo_ids)):
+    for i in range(len(halo_ids)):
         # load the 10% subsample belonging to the halo
         start_ind = halo_pstart[i]
         numparts = halo_pnum[i]
@@ -513,9 +524,10 @@ def gen_gals(directory, design, decorations, fcent, fsats, rsd, params):
             halo_pseudomass = halo_mass*np.exp(A*(2*(halo_deltac > 0) - 1))
 
             # create a list that indicates the original order 
-            halo_order = np.array(range(0, len(halo_ids)))
+            halo_order = np.arange(len(halo_ids))
 
             # first we sort everything by mass, original mass
+            # TODO: do we need to sort everything every time?
             msorted_indices = halo_mass.argsort()[::-1] # descending order
             # now build the halo catalog with the sorted indices
             halo_ids = halo_ids[msorted_indices]
@@ -553,16 +565,19 @@ def gen_gals(directory, design, decorations, fcent, fsats, rsd, params):
                  design, decorations, fcent, rsd, params)
 
         # open particle file
-        newpart = h5py.File(directory+'/particles_0.'+str(i)+'.h5')
+        newpart = h5py.File(directory+'/particles_0.'+str(i)+'.h5', 'r')
 
         # for each halo, generate satellites and output to file
         gen_sats(halo_ids, halo_pos, halo_vels, newpart, halo_mass, 
                  halo_pstart, halo_pnum, design, decorations, fsats, 
                  rsd, params)
+        newpart.close()
 
 
 def gen_gal_cat(whichsim, design, decorations, params, 
-                whatseed = 0, rsd = True):
+                whatseed = 0, rsd = True,
+                product_dir="/mnt/store2/bigsim_products/emulator_1100box_planck_products/",
+                simname = "emulator_1100box_planck_00"):
     """
     Main interface that takes in the simulation number, HOD design and 
     decorations and outputs the resulting central and satellite galaxy
@@ -601,18 +616,18 @@ def gen_gal_cat(whichsim, design, decorations, params,
                                                     'alpha_c', 
                                                     's_p', 
                                                     'A'))
-    print M_cut, M1, sigma, alpha, kappa
 
     # seed the RNG
     np.random.seed(seed = whatseed)
 
+    whichsim = int(whichsim)
     print "Generating galaxy catalog. Realization: ", whichsim
 
     # directory of the halo and particle files
-    directory = \
-    "/mnt/store2/bigsim_products/emulator_1100box_planck_products/"\
-    +"emulator_1100box_planck_00-"+str(whichsim)+"_products/"\
-    +"emulator_1100box_planck_00-"+str(whichsim)+"_rockstar_halos/z0.500"
+    directory = product_dir \
+    +simname + "-"+str(whichsim)+"_products/"\
+    +simname + "-"+str(whichsim)\
+    +"_rockstar_halos/z{:.3f}".format(params['z'])
 
     # create a output directory
     datadir = "./data"
@@ -630,6 +645,10 @@ def gen_gal_cat(whichsim, design, decorations, params,
     # if this directory does not exist, make it
     if not os.path.exists(savedir):
         os.makedirs(savedir)
+    #try:
+    #    os.makedirs(savedir)
+    #except OSError:
+    #    pass
 
     # binary output galaxy catalog
     print "Building galaxy catalog (binary output)"

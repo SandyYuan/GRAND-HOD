@@ -6,9 +6,11 @@ you need to run this script first. It takes ~10 mins.
 
 To run this script, you can do 
 
-from gen_medianc import avg_c
+from GRAND_HOD.gen_medianc import avg_c
 
-avg_c(params, True)
+# fill out `params` dict
+
+avg_c(params, rsd=True)
 
 The script will output cparam_fits.npz file to your data directory that 
 contains the best fit.
@@ -54,12 +56,12 @@ def load_mc(whichsim, params):
     +"emulator_1100box_planck_00-"+str(whichsim)+"_rockstar_halos/z0.500"
 
     # set up empty arrays
-    allms = np.array([])
-    allcs = np.array([])
+    allms = []
+    allcs = []
     # loop over all the halos files and pull out the relevant data
     files = [h5py.File(fn) for fn in glob(directory+'/halos_0.*.h5')]   
     num_files = len(files)
-    for i in range(0, num_files):
+    for i in range(num_files):
         # open the halo files
         newfile = h5py.File(directory+'/halos_0.'+str(i)+'.h5')
         halos = newfile['halos']
@@ -75,8 +77,11 @@ def load_mc(whichsim, params):
         # extract halo mass
         halo_mass = maskedhalos['m']/params['h'] # msun
         # compile them in data array
-        allms = np.concatenate((allms, halo_mass))
-        allcs = np.concatenate((allcs, halo_c))
+        allms += [halo_mass]
+        allcs += [halo_c]
+        
+    allms = np.concatenate(allms)
+    allcs = np.concatenate(allcs)
 
     # compile a list of mass and a list of median concentrations
     allms_log = np.log10(allms)
@@ -86,16 +91,12 @@ def load_mc(whichsim, params):
     mass_axis = 0.5*(massbins[:-1]+massbins[1:]) # log10 (msun)
     cmedian_axis = np.zeros(numbins)
     # go through the list to compute the median concentration
-    for i in range(0, numbins):
+    for i in range(numbins):
         newlo = massbins[i]
         newhi = massbins[i+1]
 
         # calculate the median concentration
-        masks = [allms_log > newlo, allms_log < newhi]
-        mask = reduce(np.logical_and, masks)
-        mask = np.array(mask)
-
-        newcs = allcs[mask]
+        newcs = allcs[(allms_log > newlo) & (allms_log < newhi)]
         newc_med = np.median(newcs)
 
         # calculate the standard deviation in c
@@ -124,7 +125,7 @@ def avg_c(params, rsd = True):
     all_mass = 0
     all_cmedians = 0
     all_cmedians2 = 0
-    for i in range(0, params['num_sims']):
+    for i in range(params['num_sims']):
         print "Loading data from simulation box ", i
         mass_axis, cmedian_axis = load_mc(i, params)
         all_mass = all_mass + mass_axis
@@ -138,6 +139,7 @@ def avg_c(params, rsd = True):
     var_cmedians = all_cmedians2/params['num_sims'] - c_med**2
     c_medsig = np.sqrt(var_cmedians)
     # remove nans
+    # TODO: combine masks?
     masks = [~np.isnan(c_med), ~np.isnan(c_medsig)]
     totmask = reduce(np.logical_and, masks)
     mass1 = mass[totmask]
@@ -157,9 +159,3 @@ def avg_c(params, rsd = True):
     
     fitfile = datadir+"/cparam_fits"
     np.savez(fitfile, cfit = p_c)
-
-"""
-rsd = True 
-
-avg_c(params, rsd)
-"""
