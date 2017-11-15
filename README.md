@@ -45,6 +45,7 @@ The main interface of the code is the function `gen_gal_cat()`, which takes the 
 An example code to read these data files is
 ```
 import gen_gal_catlog_rockstar as galcat
+from gen_medianc import avg_c
 
 # constants
 params = {}
@@ -79,7 +80,6 @@ whichsim = 0
 
 # compute the median halo concentration fit, you dont need to run this if you dont 
 # plan on invoking assembly bias decoration. 
-from gen_medianc import avg_c
 avg_c(params, rsd)
 
 # generate galaxy catalogs
