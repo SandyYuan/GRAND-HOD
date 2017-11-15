@@ -7,7 +7,7 @@ import numpy as np
 
 # constants
 params = {}  #{ 'z': 0.5,
-            #   'h': }
+            #   'h': } 
 params['z'] = 0.5
 params['h'] = 0.6726
 params['Nslab'] = 3
