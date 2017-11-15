@@ -2,7 +2,9 @@
 
 import numpy as np
 
+# which simulation
 whichsim = 0
+# set up where the output files are
 savedir = '/path/to/output/files'
 
 # read in the galaxy catalog
@@ -12,6 +14,7 @@ fsats = np.fromfile(savedir+"/halos_gal_sats_"+str(whichsim))
 fcent = np.array(np.reshape(fcent, (-1, 5)))
 fsats = np.array(np.reshape(fsats, (-1, 5)))
 
+# load the galaxy catalogs
 pos_cent = fcent[:,0:3]
 halo_indx_cent = fcent[:,3]
 halo_mass_cent = fcent[:,4]

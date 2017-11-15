@@ -6,16 +6,15 @@ from GRAND_HOD.gen_medianc import avg_c
 import numpy as np
 
 # constants
-params = {}  #{ 'z': 0.5,
-            #   'h': }
-params['z'] = 0.5
-params['h'] = 0.6726
-params['Nslab'] = 3
-params['Lbox'] = 1100/params['h'] # Mpc, box size
-params['Mpart'] = 3.88537e+10/params['h'] # Msun, mass of each particle
-params['velz2kms'] = 9.690310687246482e+04/params['Lbox'] # H(z)/(1+Z), km/s/Mpc
-params['maxdist'] = 30. # Mpc
-params['num_sims'] = 16
+h = 0.6726
+params = { 'z' : 0.5,
+           'h' : h,
+           'Nslab' : 3,
+           'Lbox' : 1100/h, # Mpc, box size
+           'Mpart' : 3.88537e+10/h, # Msun, mass of each particle
+           'velz2kms' : 9.690310687246482e+04/h, # H(z)/(1+Z), km/s/Mpc
+           'maxdist' : 30., # Mpc
+           'num_sims' : 16}
 
 # rsd?
 rsd = True
