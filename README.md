@@ -79,7 +79,8 @@ whichsim = 0
 
 # compute the median halo concentration fit, you dont need to run this if you dont 
 # plan on invoking assembly bias decoration. 
-import gen_medianc
+from gen_medianc import avg_c
+avg_c(params, rsd)
 
 # generate galaxy catalogs
 galcat.gen_gal_cat(whichsim, design, decorations, params, rsd = rsd)
