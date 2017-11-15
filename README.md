@@ -42,20 +42,23 @@ The main interface of the code is the function `gen_gal_cat()`, which takes the 
 - `whatseed` : integer (optional). The seed to the random number generator. Default value is 0.
 - `rsd` : boolean (optional). The redshift space distortion flag. Shifts the LOS locations of galaxies. Default is True. 
   
-An example code to read these data files is
-```
-import gen_gal_catlog_rockstar as galcat
-from gen_medianc import avg_c
+An example code to read these data files is given here.  The same code can be found in `example.py`.
+```python
+from GRAND_HOD import gen_gal_catalog_rockstar as galcat
+from GRAND_HOD.gen_medianc import avg_c
+
+import numpy as np
 
 # constants
-params = {}
+params = {}  #{ 'z': 0.5,
+            #   'h': }
 params['z'] = 0.5
 params['h'] = 0.6726
 params['Nslab'] = 3
 params['Lbox'] = 1100/params['h'] # Mpc, box size
 params['Mpart'] = 3.88537e+10/params['h'] # Msun, mass of each particle
 params['velz2kms'] = 9.690310687246482e+04/params['Lbox'] # H(z)/(1+Z), km/s/Mpc
-params['maxdist'] = 30 # Mpc
+params['maxdist'] = 30. # Mpc
 params['num_sims'] = 16
 
 # rsd?
@@ -68,23 +71,22 @@ log_Mcut = np.log10(M_cut)
 M1 = 10**13.8
 log_M1 = np.log10(M1)
 sigma = 0.85
-alpha = 1
-kappa = 1
+alpha = 1.0
+kappa = 1.0
 
 # HOD prescription 
 design = {'M_cut': M_cut, 'M1': M1, 'sigma': sigma, 'alpha': alpha, 'kappa': kappa}
-decorations = {'s': 0, 's_v': 0, 'alpha_c': 0, 's_p': 0, 'A': 0}
+decorations = {'s': 0., 's_v': 0., 'alpha_c': 0., 's_p': 0., 'A': 0.}
 
 # which simulation box are we using?
 whichsim = 0
 
 # compute the median halo concentration fit, you dont need to run this if you dont 
 # plan on invoking assembly bias decoration. 
-avg_c(params, rsd)
+#avg_c(params, rsd)
 
 # generate galaxy catalogs
 galcat.gen_gal_cat(whichsim, design, decorations, params, rsd = rsd)
-
 ```
 
 ### Output:
@@ -93,8 +95,13 @@ The outputs are stored in a folder `./data_rsd` if the `rsd` flag is True and `.
 
 The central and satellite galaxy catalog files are named `halos_gal_cent_<whichsim>` and `halos_gal_sats_<whichsim>`, respectively. Each file contains the 3D position, halo ID and halo mass of the galaxies. 
 
-An example code to read these data files is
-```
+An example code to read these data files is given here.  A more complete example can be found in `example_read_output.py`.
+```python
+import numpy as np
+
+whichsim = 0
+savedir = '/path/to/output/files'
+
 # read in the galaxy catalog
 fcent = np.fromfile(savedir+"/halos_gal_cent_"+str(whichsim))
 fsats = np.fromfile(savedir+"/halos_gal_sats_"+str(whichsim))
