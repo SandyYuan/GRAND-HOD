@@ -6,6 +6,7 @@ Distribution (HOD)for N-body cosmological simulations.
 
 Add to .bashrc:
 export PYTHONPATH="/path/to/GRAND-HOD:$PYTHONPATH"
+
 """
 
 import numpy as np
@@ -34,8 +35,8 @@ def n_cen(M_in, design, m_cutoff=4e12):
     design : dict
         Dictionary containing the five HOD parameters. 
         
-    m_cutoff: float
-        Ignore halos small than this mass
+    m_cutoff: float, optional
+        Ignore halos small than this mass.
 
     Returns
     -------
@@ -604,7 +605,23 @@ def gen_gal_cat(whichsim, design, decorations, params,
     rsd : boolean, optional
         Flag of whether to implement RSD. 
 
+    product_dir : string, optional
+        A string indicating the location of the simulation data. 
+        You should not need to change this if you are on Eisenstein group clusters.
+
+    simname : string, optional
+        The name of the simulation boxes. Defaulted to 1100 planck boxes.
+
     """
+
+    # checking for errors
+    if not type(whichsim) is int or whichsim < 0:
+        print "Error: whichsim has to be a non-negative integer."
+
+    if not type(rsd) is boolean:
+        print "Error: rsd has to be a boolean."
+
+
     M_cut, M1, sigma, alpha, kappa = map(design.get, ('M_cut', 
                                                       'M1', 
                                                       'sigma', 
