@@ -51,24 +51,23 @@ from GRAND_HOD.gen_medianc import avg_c
 
 import numpy as np
 
-# constants
-params = {}  #{ 'z': 0.5,
-            #   'h': }
-params['z'] = 0.5
-params['h'] = 0.6726
-params['Nslab'] = 3
-params['Lbox'] = 1100/params['h'] # Mpc, box size
-params['Mpart'] = 3.88537e+10/params['h'] # Msun, mass of each particle
-params['velz2kms'] = 9.690310687246482e+04/params['Lbox'] # H(z)/(1+Z), km/s/Mpc
-params['maxdist'] = 30. # Mpc
-params['num_sims'] = 16
-
-# rsd?
+# do you want to invoke rsd?
 rsd = True
-params['rsd'] = rsd
+# constants
+h = 0.6726
+params = { 'z': 0.5,
+           'h': h,
+           'Nslab': 3,                            # number of data files per simulation box
+           'Lbox': 1100/h,                        # Mpc, box size
+           'Mpart': 3.88537e+10/h,                # Msun, mass of each particle
+           'velz2kms': 9.690310687246482e+04/h,   # H(z)/(1+Z), km/s/Mpc
+           'maxdist': 30.,                        # Mpc
+           'num_sims': 16,
+           'rsd': rsd}
 
-# HOD, Zheng+2009, Kwan+2015
-M_cut = 10**13.35 # these constants are taken at the middle of the design, Kwan+15
+
+# baseline HOD  (Zheng+2009, Kwan+2015)
+M_cut = 10**13.35 
 log_Mcut = np.log10(M_cut)
 M1 = 10**13.8
 log_M1 = np.log10(M1)
@@ -76,7 +75,7 @@ sigma = 0.85
 alpha = 1.0
 kappa = 1.0
 
-# HOD prescription 
+# generalized HOD prescription 
 design = {'M_cut': M_cut, 'M1': M1, 'sigma': sigma, 'alpha': alpha, 'kappa': kappa}
 decorations = {'s': 0., 's_v': 0., 'alpha_c': 0., 's_p': 0., 'A': 0.}
 
@@ -102,7 +101,7 @@ An example code to read these data files is given here.  A more complete example
 import numpy as np
 
 whichsim = 0
-savedir = '/path/to/output/files'
+savedir = '/path/to/output/files' # this is the path to the data files
 
 # read in the galaxy catalog
 fcent = np.fromfile(savedir+"/halos_gal_cent_"+str(whichsim))
@@ -111,6 +110,7 @@ fsats = np.fromfile(savedir+"/halos_gal_sats_"+str(whichsim))
 fcent = np.array(np.reshape(fcent, (-1, 5)))
 fsats = np.array(np.reshape(fsats, (-1, 5)))
 
+# load these files into arrays
 pos_cent = fcent[:,0:3]
 halo_indx_cent = fcent[:,3]
 halo_mass_cent = fcent[:,4]
