@@ -618,7 +618,7 @@ def gen_gal_cat(whichsim, design, decorations, params,
     if not type(whichsim) is int or whichsim < 0:
         print "Error: whichsim has to be a non-negative integer."
 
-    if not type(rsd) is boolean:
+    if not type(rsd) is bool:
         print "Error: rsd has to be a boolean."
 
 
