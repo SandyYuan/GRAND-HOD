@@ -12,7 +12,9 @@ The code is currently written specifically for the Abacus simulations, but the m
 
 The code does not currently have dependencies other than basic Python packages. 
 
-To install, simply download the .py files to the directory you want the mock catalogs to live in. If you are not on the Eisenstein Group computer clusters at CfA, you may need to change the `directory` variable to point to the location of the simulation data. Keep the simulation box tag `str(whichsim)` as an unknown variable. 
+To install, simply download the .py files to the directory you want the mock catalogs to live in. If you are not on the Eisenstein Group computer clusters at CfA, you may need to change the `product_dir` variable to point to the location of the simulation data. 
+
+If you wish to access the package anywhere on your system, simply add `export PYTHONPATH="/path/to/GRAND-HOD:$PYTHONPATH"` to your .bashrc file. Modify `/path/to/` to the directory of the package.
 
 ### Input:
 The main interface of the code is the function `gen_gal_cat()`, which takes the following inputs:
