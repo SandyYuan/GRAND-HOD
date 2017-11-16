@@ -43,8 +43,8 @@ The main interface of the code is the function `gen_gal_cat()`, which takes the 
   - `num_sims` : integer. The number of simulation boxes. For current Abacus 1100 boxes, `num_sims = 16`.
 - `whatseed` : integer (optional). The seed to the random number generator. Default value is 0.
 - `rsd` : boolean (optional). The redshift space distortion flag. Shifts the LOS locations of galaxies. Default is True. 
-  
-An example code to read these data files is given here.  The same code can be found in `example.py`.
+- `product_dir` : string (optional). A string indicating the location of the simulation data. You should not need to change this if you are on Eisenstein group clusters.
+- `simname` : string (optional). The name of the simulation boxes. Defaulted to 1100 planck boxes. An example code to read these data files is given here.  The same code can be found in `example.py`.
 ```python
 from GRAND_HOD import gen_gal_catalog_rockstar as galcat
 from GRAND_HOD.gen_medianc import avg_c
