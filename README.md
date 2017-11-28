@@ -60,8 +60,7 @@ params = { 'z': 0.5,
            'Nslab': 3,                            # number of data files per simulation box
            'Lbox': 1100/h,                        # Mpc, box size
            'Mpart': 3.88537e+10/h,                # Msun, mass of each particle
-           'velz2kms': 9.690310687246482e+04/h,   # H(z)/(1+Z), km/s/Mpc
-           'maxdist': 30.,                        # Mpc, maximum pair separation. You dont need this for galaxy catalogs. 
+           'velz2kms': 9.690310687246482e+04/h,   # H(z)/(1+Z), km/s/Mpc, conversion factor between redshift and velocity.
            'num_sims': 16,                        # number of simulation boxes
            'rsd': rsd}                            # redshift space distortion flag
 
