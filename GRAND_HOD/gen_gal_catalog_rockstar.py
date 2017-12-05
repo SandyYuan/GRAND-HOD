@@ -173,7 +173,7 @@ def gen_cent(halo_ids, halo_pos, halo_vels, halo_vrms, halo_mass,
     -------
 
     For each halo, if there exists a central, the function outputs the 
-    3D position, halo ID, and halo mass to file.
+    3D position (Mpc), halo ID, and halo mass (Msun) to file.
 
     """
 
@@ -269,7 +269,7 @@ def gen_sats(halo_ids, halo_pos, halo_vels, newpart, halo_mass,
     -------
 
     For each halo, the function outputs the satellite galaxies, specifically
-    the 3D position, halo ID, and halo mass to file.
+    the 3D position (Mpc), halo ID, and halo mass (Msun) to file.
 
 
     """
@@ -462,6 +462,7 @@ def gen_gals(directory, design, decorations, fcent, fsats, rsd, params):
 
     params : dict
         Dictionary of various simulation parameters. 
+
 
     """
 

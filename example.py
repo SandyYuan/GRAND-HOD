@@ -14,11 +14,11 @@ params = { 'z': 0.5,
            'Nslab': 3,                            # number of data files per simulation box
            'Lbox': 1100/h,                        # Mpc, box size
            'Mpart': 3.88537e+10/h,                # Msun, mass of each particle
-           'velz2kms': 9.690310687246482e+04/h,   # H(z)/(1+Z), km/s/Mpc
-           'maxdist': 30.,                        # Mpc
            'num_sims': 16,
            'rsd': rsd}
 
+# parameter for converting velocity in km/s to position in Mpc
+params['velz2kms'] = 9.690310687246482e+04/params['Lbox']   # H(z)/(1+Z), km/s/Mpc
 
 # baseline HOD  (Zheng+2009, Kwan+2015)
 M_cut = 10**13.35 

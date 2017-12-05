@@ -15,10 +15,10 @@ fcent = np.array(np.reshape(fcent, (-1, 5)))
 fsats = np.array(np.reshape(fsats, (-1, 5)))
 
 # load the galaxy catalogs
-pos_cent = fcent[:,0:3]
-halo_indx_cent = fcent[:,3]
-halo_mass_cent = fcent[:,4]
+pos_cent = fcent[:,0:3]           # central galaxy positions, Mpc
+halo_indx_cent = fcent[:,3]       # central galaxy halo indices
+halo_mass_cent = fcent[:,4]       # central galaxy halo mass, Msun
 
-pos_sats = fsats[:,0:3]
-halo_indx_sats = fsats[:,3]
-halo_mass_sats = fsats[:,4]
+pos_sats = fsats[:,0:3]           # satellite galaxy positions, Mpc
+halo_indx_sats = fsats[:,3]       # satellite galaxy halo indicies
+halo_mass_sats = fsats[:,4]       # satellite galaxy halo mass, Msun
