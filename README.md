@@ -57,10 +57,10 @@ rsd = True
 h = 0.6726
 params = { 'z': 0.5,
            'h': h,
-           'Nslab': 3,                            # number of data files per simulation box
            'Lbox': 1100/h,                        # Mpc, box size
            'Mpart': 3.88537e+10/h,                # Msun, mass of each particle
            'num_sims': 16,                        # number of simulation boxes
+                                                  # (there are 16 boxes for the 1100Mpc simulation, and 40 boxes for 720Mpc                                                     # simulations.)
            'rsd': rsd}                            # redshift space distortion flag
 
 # parameter for converting velocity in km/s to position in Mpc
