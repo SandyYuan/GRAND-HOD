@@ -36,7 +36,6 @@ The main interface of the code is the function `gen_gal_cat()`, which takes the 
 - `params` : dictionary. Simulation parameters. Following are the required parameters:
   - `z` : float. Redshift of the simulation snapshot. With the current directory, `z = 0.5`.
   - `h` : float. Hubble constant. For Planck cosmology, we use `h = 0.6726`.
-  - `Nslab` : float. The number of halo data files each simulation box produces. For current Abacus 1100 boxes, `Nslab = 3`.
   - `Lbox` : float. The size of the simulation box in Mpc. For current Abacus 1100 boxes, `Lbox = 1100/h`.
   - `Mpart` : float. The particle mass in solar mass. For current Abacus 1100 boxes, `Mpart = 3.88e10/h`.
   - `velz2kms` : float. The conversion from simulation velocity to velocity in km/s and vice versa. The value can be calculated by H(z)/(1+z). 
@@ -60,7 +59,6 @@ params = { 'z': 0.5,
            'Lbox': 1100/h,                        # Mpc, box size
            'Mpart': 3.88537e+10/h,                # Msun, mass of each particle
            'num_sims': 16,                        # number of simulation boxes
-                                                  # (there are 16 boxes for the 1100Mpc simulation, and 40 boxes for 720Mpc                                                     # simulations.)
            'rsd': rsd}                            # redshift space distortion flag
 
 # parameter for converting velocity in km/s to position in Mpc
