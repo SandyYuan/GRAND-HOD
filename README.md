@@ -66,9 +66,7 @@ params['velz2kms'] = 9.690310687246482e+04/params['Lbox']   # H(z)/(1+Z), km/s/M
 
 # baseline HOD  (Zheng+2009, Kwan+2015)
 M_cut = 10**13.35 
-log_Mcut = np.log10(M_cut)
 M1 = 10**13.8
-log_M1 = np.log10(M1)
 sigma = 0.85
 alpha = 1.0
 kappa = 1.0
