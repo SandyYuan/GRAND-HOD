@@ -6,7 +6,7 @@ Sihan (Sandy) Yuan, Daniel Eisenstein & Lehman Garrison
 ## Introduction:
 An Halo Occupation Distribution (HOD) code in Python that is differentiable and incorporates various generalizations to the standard HOD. The code takes a generalized HOD prescription as input and outputs the corresponding mock galaxy catalogs in binary files.
 
-The code is currently written specifically for the Abacus simulations, but the main functionalities can be also easily adapted for other halo catalogs with the appropriate properties. We will update the code soon to support halo catalogs from other cosmological simulations. 
+The code is currently written specifically for the [Abacus simulations](https://lgarrison.github.io/AbacusCosmos/), but the main functionalities can be also easily adapted for other halo catalogs with the appropriate properties. We will update the code soon to support halo catalogs from other cosmological simulations. 
 
 ## Usage:
 
@@ -66,9 +66,7 @@ params['velz2kms'] = 9.690310687246482e+04/params['Lbox']   # H(z)/(1+Z), km/s/M
 
 # baseline HOD  (Zheng+2009, Kwan+2015)
 M_cut = 10**13.35 
-log_Mcut = np.log10(M_cut)
 M1 = 10**13.8
-log_M1 = np.log10(M1)
 sigma = 0.85
 alpha = 1.0
 kappa = 1.0
@@ -123,7 +121,7 @@ where `savedir` is the directory where the data files live in, and `whichsim` is
 
 
 ## Citation:
-If you use this code, please cite [Yuan, Eisenstein & Garrison (2017)](http://adsabs.harvard.edu/doi/10.1093/mnras/stx2032).
+If you use this code, please cite [Yuan, Eisenstein & Garrison (2018)](https://arxiv.org/abs/1802.10115).
 
 ## Help 
 If you need help with the code, please contact me (Sandy) at sihan.yuan@cfa.harvard.edu. 
