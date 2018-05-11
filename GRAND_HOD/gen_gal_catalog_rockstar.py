@@ -367,9 +367,10 @@ def gen_sats(halo_ids, halo_pos, halo_vels, newpart, halo_mass,
                 v_rel2 = vels_rel[:,0]**2 + vels_rel[:,1]**2 + vels_rel[:,2]**2
 
                 # calculate radial and tangential peculiar velocity
-                vel_rad = vels_rel*r_rel_norm
+                vel_rad = np.dot(vels_rel, r_rel_norm)
                 # radial component
-                v_rad2 = vel_rad[:,0]**2 + vel_rad[:,1]**2 + vel_rad[:,2]**2
+                v_rad2 = vel_rad**2
+                #v_rad2 = vel_rad[:,0]**2 + vel_rad[:,1]**2 + vel_rad[:,2]**2
                 # tangential component
                 v_tan2 = v_rel2 - v_rad2
 
