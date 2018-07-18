@@ -56,8 +56,8 @@ def load_mc(whichsim, params):
     +"emulator_1100box_planck_00-"+str(whichsim)+"_rockstar_halos/z0.500"
 
     # set up empty arrays
-    allms = []
-    allcs = []
+    allms = np.array([])
+    allcs = np.array([])
     # loop over all the halos files and pull out the relevant data
     files = [h5py.File(fn) for fn in glob(directory+'/halos_0.*.h5')]   
     num_files = len(files)
@@ -77,11 +77,8 @@ def load_mc(whichsim, params):
         # extract halo mass
         halo_mass = maskedhalos['m']/params['h'] # msun
         # compile them in data array
-        allms += [halo_mass]
-        allcs += [halo_c]
-        
-    allms = np.concatenate(allms)
-    allcs = np.concatenate(allcs)
+        allms = np.concatenate((allms, halo_mass))
+        allcs = np.concatenate((allcs, halo_c))
 
     # compile a list of mass and a list of median concentrations
     allms_log = np.log10(allms)
